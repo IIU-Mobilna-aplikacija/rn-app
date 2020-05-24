@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 
 export default class Merenje extends React.Component {
@@ -17,10 +17,8 @@ export default class Merenje extends React.Component {
                             progress={this.props.progress} 
                             width={null} animated={false} borderColor={'#323337'} height={8} unfilledColor={'#323337'}/>
                     </View>
-                    
                 </View>
                 <View style={styles.arrowField}>
-                    <Image source={require('C:/Users/Danilo/projects/iot_elab/assets/Chevron.png')}/>
                 </View>
             </View>
         );

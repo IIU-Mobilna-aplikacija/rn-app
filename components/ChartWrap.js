@@ -1,47 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, Text, TouchableHighlight } from 'react-native';
-import renderIf from './renderIf';
-import ListElement from './ListElement';
+import { View, Text, Dimensions } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Chart from './Chart';
 
-export default class ChartWrap extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            status: false
-        }
-    }
 
-    toggleStatus() {
-        this.setState({
-            status: !this.state.status
-        });
-    }
-    
+export default class ChartWrap extends React.Component {    
     render() {
         return(
-            <View style={styles.content}>
-                <TouchableHighlight onPress={()=>this.toggleStatus()}>
-                    <ListElement name="Kiseonik"/>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={()=> this.toggleStatus()}>
-                    <ListElement name="Ugljen-dioksid"/>
-                </TouchableHighlight>
-                <ListElement name="Vlažnost vazduha" />
-                <ListElement name="UV Index"/>
-                <ListElement name="Temperatura"/>
-                {renderIf(this.state.status)(
-                <Text>
-                    I am dynamic text View
+            <View style={{marginTop: 20, height: 250}}>
+                <Text style={{
+                    fontSize: 24, 
+                    fontWeight: "bold", 
+                    paddingLeft: 30, 
+                    color: "white"}}>
+                        {this.props.name}
                 </Text>
-                )}
+                <ScrollView 
+                    horizontal={true} 
+                    decelerationRate={0} 
+                    snapToInterval={Dimensions.get('window').width} 
+                    snapToAlignment={"center"}
+                    indicatorStyle="white"
+                    >
+                    <Chart linedata={this.props.linedata} units={this.props.units}/>
+                    <Chart linedata={this.props.linedata} units={this.props.units}/>
+                    <Chart linedata={this.props.linedata} units={this.props.units}/>
+                </ScrollView>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    content: {
-        flex: 1,
-        width: '90%'
-    }
-});
