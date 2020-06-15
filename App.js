@@ -8,14 +8,6 @@ import ChartWrap from './components/ChartWrap';
 import { ScrollView } from 'react-native-gesture-handler';
 
 
-const data = {
-  oxygen: 21,
-  carbon: 600,
-  humidity: 50,
-  uv: 3,
-  temp: 18
-}
-
 const linedata = {
   labels: ['20.04', '21.04', '22.04', '23.04', '24.04', '25.04', '26.04'],
   datasets: [
@@ -26,15 +18,39 @@ const linedata = {
   ],
 };
 
-function HomeScreen() {
-  return (
-    <View style={styles.container}>
+class HomeScreen extends React.Component {
+  //konstruktor sa inicijalnim state-om komponente
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: null, //initial state
+    };
+  }
+
+  //funkcija koja se izvrsava nakon prvog renderovanja komponente
+  componentDidMount() {
+    //asinhrona funkcija koja poziva api na serveru
+    fetch('http://172.20.222.226:5000/vratisve') //url koji gadjamo
+    .then((response) => response.json()) //pravimo json objekat od odgovora koji dobijemo
+    .then((json) => {
+      this.setState({ data: json}); //state-u dodeljujemo json objekat sa podacima
+    })
+    .catch((error) => console.error(error))
+  }  
+  
+  render() {
+    const {data} = this.state; //data ce biti json objekat iz state-a
+    return(
+      <View style={styles.container}>
       <Text style={styles.title}>Home</Text>
       <View style={styles.content}>
-        <ListaMerenja data={data}/>
+        {/* Ukoliko je data null na aplikaciji ce se prikazati Loading... tekst, 
+        u suprotnom instancira se <ListaMerenja/> objekat kojem se prosledjuje props */}
+        {!data ? <Text>Loading....</Text> : <ListaMerenja data={data.trenutno} /> }
       </View>
     </View>
-  );
+    );
+  }
 }
 
 function IstorijaScreen() {
@@ -43,8 +59,7 @@ function IstorijaScreen() {
       <Text style={styles.title}>Istorija</Text>
       <View style={styles.graphs}>
         <ScrollView>
-          <ChartWrap name="Kiseonik" units="% " linedata = {linedata}/>
-          <ChartWrap name="Ugljen-dioksid" units="ppm " linedata = {linedata}/>  
+          <ChartWrap name="Ugljen-monoksid" units="ppm " linedata = {linedata}/>  
           <ChartWrap name="Vlažnost vazduha" units="% " linedata = {linedata}/>  
           <ChartWrap name="UV Indeks" units=" " linedata = {linedata}/>  
           <ChartWrap name="Temperatura" units="C " linedata = {linedata}/> 

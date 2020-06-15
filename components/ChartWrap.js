@@ -9,7 +9,7 @@ export default class ChartWrap extends React.Component {
         return(
             <View style={{marginTop: 20, height: 250}}>
                 <Text style={{
-                    fontSize: 24, 
+                    fontSize: 18, 
                     fontWeight: "bold", 
                     paddingLeft: 30, 
                     color: "white"}}>

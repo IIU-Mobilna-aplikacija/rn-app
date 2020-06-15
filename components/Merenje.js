@@ -1,24 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 
 export default class Merenje extends React.Component {
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.logo}></View>
-                <View style={styles.data}>
-                    <View style={styles.titleField}>
-                        <Text style={styles.title}>{this.props.name}</Text>
-                        <Text style={styles.dataMeasured}>{this.props.data}{this.props.unit}</Text> 
+            <View style={styles.container}> 
+                <View style={styles.logo}></View> {/*Container za logo */}
+                <View style={styles.data}> {/*Container za podatke */}
+                    <View style={styles.titleField}>{ /* Container za ime merenja */}
+                        <Text style={styles.title}>{this.props.name}</Text> {/*Ime merenja */}
+                        <Text style={styles.dataMeasured}>{this.props.data}{this.props.unit}</Text> {/*Izmereni podaci i jedinica mere */}
                     </View>
-                    <View style={styles.progressBarField}>
+                    <View style={styles.progressBarField}> {/*Container za progress bar */}
                         <ProgressBar 
                             progress={this.props.progress} 
-                            width={null} animated={false} borderColor={'#323337'} height={8} unfilledColor={'#323337'}/>
+                            width={null} animated={false} borderColor={'#323337'} height={8} unfilledColor={'#323337'}/>{/*Progress bar komponenta */}
                     </View>
                 </View>
-                <View style={styles.arrowField}>
+                <View style={styles.arrowField}> {/*Container za strelicu */}
                 </View>
             </View>
         );
